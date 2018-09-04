@@ -9,4 +9,8 @@ if (isProd) {
   webpackConfig = require('./webpack.dev.config')
 }
 
-webpack(webpackConfig)
+webpack(webpackConfig, (err, stats) => {
+  if(err || stats.hasErrors()) {
+    console.log(err)
+  }
+})
