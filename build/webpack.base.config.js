@@ -1,18 +1,26 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  entry: './src/main.js',
+  context: path.resolve(__dirname, '../'),
+  entry: './src/index.js',
   output: {
-    filename: 'build.js',
-    path: path.resolve(__dirname, '../dist')
+    filename: 'js/[name].[chunkhash].js',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: 'index.html'
     }),
-    new VueLoaderPlugin()
+    new CopyWebpackPlugin([
+      {
+        from: './static',
+        to: './',
+        ignore: ['.*']
+      }
+    ])
   ],
   module: {
     rules: [
