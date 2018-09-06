@@ -10,6 +10,6 @@ const compiler = Webpack(webpackConfig)
 
 const server = new WebpackDevServer(compiler, devServer)
 
-server.listen(devServer.port, 'localhost', () => {
+server.listen(devServer.port, devServer.host, () => {
   console.log('start server')
 })

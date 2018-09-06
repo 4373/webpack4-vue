@@ -17,7 +17,9 @@ const config = merge(baseConfig, {
       colors: true,
       all: false,
       chunks: true,
-      timings: true
+      timings: true,
+      errors: true,
+      errorDetails: true
     }
   },
   plugins: [new webpack.HotModuleReplacementPlugin()]
