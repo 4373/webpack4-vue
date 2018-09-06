@@ -1,5 +1,6 @@
 const Webpack = require('webpack')
 const WebpackDevServer = require('webpack-dev-server')
+const chalk = require('chalk')
 
 const webpackConfig = require('./webpack.dev.config.js')
 const { devServer } = webpackConfig
@@ -11,5 +12,5 @@ const compiler = Webpack(webpackConfig)
 const server = new WebpackDevServer(compiler, devServer)
 
 server.listen(devServer.port, devServer.host, () => {
-  console.log('start server')
+  console.log(chalk.cyan(`open http://${devServer.host}:${devServer.port}`))
 })
