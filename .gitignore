@@ -3,3 +3,4 @@
 /static
 /dist
 /test
+/.cache-loader

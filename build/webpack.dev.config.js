@@ -8,10 +8,18 @@ const config = merge(baseConfig, {
   mode: 'development',
   devServer: {
     contentBase: './dist',
-    port: '6636',
+    host: 'localhost',
+    port: 6636,
     hot: true,
-    open: true
+    open: true,
+    overlay: true,
+    stats: {
+      colors: true,
+      all: false,
+      chunks: true,
+      timings: true
+    }
   },
-  plugins: []
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 })
 module.exports = config
