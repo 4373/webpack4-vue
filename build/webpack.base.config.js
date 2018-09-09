@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: './src/index.js',
+  entry: './src/main.js',
   output: {
     filename: 'static/js/[name].[hash].js',
     path: path.resolve(__dirname, '../dist'),
@@ -13,7 +13,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      vue$: 'vue/dist/vue.esm.js'
+      vue$: 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, '../src')
     }
   },
   plugins: [
@@ -42,6 +43,10 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
         use: ['file-loader']
+      },
+      {
+        test: /.styl$/,
+        use: ['stylus-loader']
       }
     ]
   }
