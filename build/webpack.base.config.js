@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: './src/index.js',
+  entry: './src/main.js',
   output: {
     filename: 'static/js/[name].[hash].js',
     path: path.resolve(__dirname, '../dist'),
@@ -15,11 +15,13 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
       '@': path.resolve(__dirname, '../src')
-    }
+    },
+    extensions: ['.js', '.vue', '.json']
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html'
+      template: 'index.html',
+      chunksSortMode: 'none'
     }),
     new VueLoaderPlugin(),
     new CopyWebpackPlugin([
@@ -33,6 +35,22 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.jsx?$/,
+        use: [
+          {
+            loader: 'cache-loader'
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-syntax-dynamic-import'], // 按需加载的错误
+              exclude: /node_modules/
+            }
+          }
+        ]
+      },
+      {
         test: /\.vue$/,
         use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }]
       },
@@ -42,7 +60,14 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: ['file-loader']
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'static/[path][name].[ext]'
+            }
+          }
+        ]
       },
       {
         test: /\.less$/,

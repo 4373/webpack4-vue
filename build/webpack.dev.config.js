@@ -8,15 +8,17 @@ const config = merge(baseConfig, {
   mode: 'development',
   devServer: {
     contentBase: './dist',
-    host: 'localhost',
-    port: 6636,
+    host: '127.0.0.1',
+    disableHostCheck: true,
+    port: 8833,
     hot: true,
     open: true,
     overlay: true,
     stats: {
       colors: true,
       all: false,
-      chunks: true,
+      chunks: false,
+      chunkGroups: true,
       timings: true,
       errors: true,
       errorDetails: true
