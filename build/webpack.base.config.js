@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: './src/main.js',
+  entry: ['@babel/polyfill', './src/main.js'],
   output: {
     filename: 'static/js/[name].[hash].js',
     path: path.resolve(__dirname, '../dist'),
@@ -54,7 +54,8 @@ module.exports = {
                   }
                 ]
               ], // 按需加载的错误
-              exclude: /node_modules/
+              exclude: /node_modules/,
+              cacheDirectory: true
             }
           }
         ]
