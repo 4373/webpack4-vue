@@ -5,7 +5,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: './src/main.js',
+  entry: './src/index.js',
   output: {
     filename: 'static/js/[name].[hash].js',
     path: path.resolve(__dirname, '../dist'),
@@ -45,8 +45,8 @@ module.exports = {
         use: ['file-loader']
       },
       {
-        test: /.styl$/,
-        use: ['stylus-loader']
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
       }
     ]
   }
