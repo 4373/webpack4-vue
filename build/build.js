@@ -3,11 +3,11 @@ const chalk = require('chalk')
 const rm = require('rimraf')
 const path = require('path')
 
-console.log(chalk.blue('removing dist'))
+console.log(chalk.cyan('removing dist'))
 rm.sync(path.resolve(__dirname, '../dist'))
 console.log(chalk.green('remove dist successful'))
 const webpackConfig = require('./webpack.prod.config')
-console.log(chalk.blue('start webpack'))
+console.log(chalk.cyan('start webpack'))
 let time = Date.now()
 webpack(webpackConfig, (err, stats) => {
   if (err) throw err

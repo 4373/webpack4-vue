@@ -44,7 +44,16 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-              plugins: ['@babel/plugin-syntax-dynamic-import'], // 按需加载的错误
+              plugins: [
+                '@babel/plugin-syntax-dynamic-import',
+                [
+                  'component',
+                  {
+                    libraryName: 'element-ui',
+                    styleLibraryName: 'theme-chalk'
+                  }
+                ]
+              ], // 按需加载的错误
               exclude: /node_modules/
             }
           }
@@ -53,6 +62,10 @@ module.exports = {
       {
         test: /\.vue$/,
         use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }]
+      },
+      {
+        test: /\.less$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.css$/,
@@ -70,8 +83,12 @@ module.exports = {
         ]
       },
       {
-        test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/fonts/[name].[hash:7].[ext]'
+        }
       }
     ]
   }
