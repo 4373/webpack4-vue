@@ -8,6 +8,10 @@ const path = require('path')
 const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')
 const smp = new SpeedMeasurePlugin()
 
+// 构建分析
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
+
 module.exports = smp.wrap(
   merge(baseConfig, {
     mode: 'production',
@@ -48,7 +52,8 @@ module.exports = smp.wrap(
       // 提取css
       new MiniCssExtractPlugin({
         filename: 'static/css/[name].[contenthash].css'
-      })
+      }),
+      new BundleAnalyzerPlugin()
     ],
     optimization: {
       minimizer: [

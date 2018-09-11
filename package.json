@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "set NODE_ENV=development&& node ./build/serve.js",
-    "build": "set NODE_ENV=production&& node ./build/build.js",
-    "dev": "webpack-dev-server --config build/webpack.dev.config.js"
+    "build": "set NODE_ENV=production&& node ./build/build.js"
   },
   "keywords": [],
   "author": "",
@@ -46,6 +45,7 @@
     "vue-loader": "^15.4.1",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.17.2",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.8",
     "webpack-merge": "^4.1.4"
