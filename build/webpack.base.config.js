@@ -2,10 +2,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: ['@babel/polyfill', './src/main.js'],
   output: {
     filename: 'static/js/[name].[hash].js',
     path: path.resolve(__dirname, '../dist'),
@@ -35,42 +35,22 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        use: [
-          {
-            loader: 'cache-loader'
-          },
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-              plugins: [
-                '@babel/plugin-syntax-dynamic-import',
-                [
-                  'component',
-                  {
-                    libraryName: 'element-ui',
-                    styleLibraryName: 'theme-chalk'
-                  }
-                ]
-              ], // 按需加载的错误
-              exclude: /node_modules/,
-              cacheDirectory: true
-            }
-          }
-        ]
-      },
-      {
         test: /\.vue$/,
-        use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }]
+        use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }],
+        include: [path.resolve(__dirname, '../src')]
       },
       {
         test: /\.less$/,
-        use: ['style-loader', 'css-loader', 'less-loader']
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'less-loader'
+        ],
+        include: [path.resolve(__dirname, '../src')]
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [{ loader: MiniCssExtractPlugin.loader }, 'css-loader']
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/,
@@ -78,7 +58,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: 'static/[path][name].[ext]'
+              name: 'static/images/[name].[ext]'
             }
           }
         ]

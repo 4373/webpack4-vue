@@ -17,7 +17,6 @@ webpack(webpackConfig, (err, stats) => {
     process.exit(1)
   }
   time = (Date.now() - time) / 1000
-  console.log(chalk.cyan(`build time: ${time} s`))
   process.stdout.write(
     stats.toString({
       colors: true,
@@ -28,4 +27,5 @@ webpack(webpackConfig, (err, stats) => {
     }) + '\n\n'
   )
   console.log(chalk.black.bgGreenBright('build successful'))
+  console.log(chalk.cyan(`build time: ${time} s`))
 })
