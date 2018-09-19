@@ -8,6 +8,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const config = merge(baseConfig, {
   mode: 'development',
   entry: './src/main.js',
+  output: {
+    filename: 'static/js/[name].[hash].js',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
+  },
   module: {
     rules: [
       {

@@ -11,15 +11,23 @@ const smp = new SpeedMeasurePlugin()
 // 构建分析
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
-
+// smp.wrap = obj => obj
 module.exports = smp.wrap(
   merge(baseConfig, {
     mode: 'production',
-    entry: ['@babel/polyfill', './src/main.js'],
+    entry: {
+      polyfill: '@babel/polyfill',
+      main: './src/main.js'
+    },
+    output: {
+      filename: 'static/js/[name].[chunkhash].js',
+      path: path.resolve(__dirname, '../dist'),
+      publicPath: '/'
+    },
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.js$/,
           use: [
             {
               loader: 'cache-loader'
@@ -37,6 +45,13 @@ module.exports = smp.wrap(
                       styleLibraryName: 'theme-chalk'
                     }
                   ]
+                  // [
+                  //   'import',
+                  //   {
+                  //     libraryName: 'iview',
+                  //     libraryDirectory: 'src/components'
+                  //   }
+                  // ]
                 ],
                 exclude: /node_modules/,
                 cacheDirectory: true
@@ -52,8 +67,8 @@ module.exports = smp.wrap(
       // 提取css
       new MiniCssExtractPlugin({
         filename: 'static/css/[name].[contenthash].css'
-      }),
-      new BundleAnalyzerPlugin()
+      })
+      //new BundleAnalyzerPlugin()
     ],
     optimization: {
       minimizer: [
@@ -64,7 +79,17 @@ module.exports = smp.wrap(
           cache: true,
           parallel: 4
         })
-      ]
+      ],
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: true
+    },
+    externals: {
+      Vue: 'vue',
+      Vuex: 'vuex',
+      VueRouter: 'vue-router',
+      Axios: 'axios'
     }
   })
 )

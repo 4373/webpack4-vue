@@ -10,12 +10,23 @@ const webpackConfig = require('./webpack.prod.config')
 console.log(chalk.cyan('start webpack'))
 let time = Date.now()
 webpack(webpackConfig, (err, stats) => {
-  if (err) throw err
+  if (err) {
+    console.error(err.stack || err)
+    if (err.details) {
+      console.error(err.details)
+    }
+    throw err
+  }
+  const info = stats.toJson()
 
   if (stats.hasErrors()) {
-    console.log(chalk.red('  Build failed with errors.\n'))
+    console.error(info.errors)
     process.exit(1)
   }
+  if (stats.hasWarnings()) {
+    console.warn(info.warnings)
+  }
+
   time = (Date.now() - time) / 1000
   process.stdout.write(
     stats.toString({

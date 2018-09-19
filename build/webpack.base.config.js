@@ -6,11 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  output: {
-    filename: 'static/js/[name].[hash].js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
-  },
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
@@ -36,8 +31,8 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }],
-        include: [path.resolve(__dirname, '../src')]
+        use: [{ loader: 'cache-loader' }, { loader: 'vue-loader' }]
+        // include: [path.resolve(__dirname, '../src'), /node_modules\/iview/]
       },
       {
         test: /\.less$/,
@@ -47,6 +42,15 @@ module.exports = {
           'less-loader'
         ],
         include: [path.resolve(__dirname, '../src')]
+      },
+      {
+        test: /\.less$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'less-loader'
+        ],
+        include: [/node_modules\/iview/]
       },
       {
         test: /\.css$/,
